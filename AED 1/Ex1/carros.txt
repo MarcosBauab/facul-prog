@@ -1,0 +1,14 @@
+Placa: ZECA2
+Marca: JO
+Modelo: JO
+Ano de fabricacao: 2
+Quilometragem: 3
+Numero de portas: 4
+Ar-condicionado: N
+Placa: KAKA2
+Marca: Chevrolet
+Modelo: Onix
+Ano de fabricacao: 2017
+Quilometragem: 18041
+Numero de portas: 2
+Ar-condicionado: n
