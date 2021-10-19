@@ -1,14 +1,21 @@
-Placa: ZECA2
-Marca: JO
-Modelo: JO
+Placa: JOT231
+Marca: BMW
+Modelo: X1
+Ano de fabricacao: 1978
+Quilometragem: 17823
+Numero de portas: 7
+Ar-condicionado: S
+Placa: TES213
+Marca: A
+Modelo: B
 Ano de fabricacao: 2
 Quilometragem: 3
-Numero de portas: 4
+Numero de portas: 1
 Ar-condicionado: N
-Placa: KAKA2
-Marca: Chevrolet
-Modelo: Onix
-Ano de fabricacao: 2017
-Quilometragem: 18041
-Numero de portas: 2
-Ar-condicionado: n
+Placa: TES23
+Marca: J
+Modelo: J
+Ano de fabricacao: 2018
+Quilometragem: 3
+Numero de portas: 3
+Ar-condicionado: N

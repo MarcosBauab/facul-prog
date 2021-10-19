@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <string.h>
 #define TAM 100
-
+//Estrutura padrão para registros no arquivo carros.txt
 struct Veiculo{
     char marca[15];
     char modelo[25];
@@ -18,7 +18,7 @@ struct Veiculo{
     int numPortas;
     char arCondicionado;
 };
-//É usado somente para quando os dados forem buscados no arquivo .txt para serem alterados
+//É usado somente para quando os dados forem buscados no arquivo carros.txt para serem alterados
 struct VeiculoAlterado{
     char marca[TAM];
     char modelo[TAM];
@@ -36,6 +36,7 @@ void cadastrar(struct Veiculo *carro){
         printf("ERRO NA ABERTURA DO ARQUIVO\n");
         return;
     }
+    fclose(cars);
     cars = fopen("carros.txt","a");
     
 
@@ -209,7 +210,7 @@ void alterar(struct VeiculoAlterado *carro2){
         fprintf(temporario,"Quilometragem: %s\n",carro2->quilometragem);
         fprintf(temporario,"Numero de portas: %s\n",carro2->numPortas);
         fprintf(temporario,"Ar-condicionado: %s",carro2->arCondicionado);
-        
+
         fclose(cars);
         fclose(temporario);
         remove("carros.txt");
@@ -255,6 +256,65 @@ void mostrar(){
     fclose(cars);
 }
 
+void excluir(){
+    FILE *cars;
+    cars = fopen("carros.txt","r");
+    if(cars == NULL){
+        printf("ERRO NA ABERTURA DO ARQUIVO\n");
+        return;
+    } 
+
+    char linha[TAM], placa[6];
+
+    printf("Qual a placa do veiculo a ser excluido ? ");
+    scanf("%s", &placa);
+
+    char frase[20] = "Placa: ";
+    strcat(frase, placa);
+    
+    int numLinha = 1, registrado = 0;
+    
+
+    while(fgets(&linha, TAM, cars) != NULL){
+        linha[strcspn(linha,"\n")] = 0;
+        if(strcmp(linha, frase) == 0){
+            registrado = 1;
+            break; 
+        } else{
+            numLinha++;
+        } 
+    }
+    if(registrado == 0){
+        printf("Veiculo nao encontrado, voltando ao menu inicial...\n");
+    } else{
+        rewind(cars);
+        FILE *temporario = fopen("temporario.tmp","w");
+        int escolha;
+
+        char letra;
+        int linhaDeletar = 1;
+        letra = getc(cars);
+        while(letra != EOF){
+            if(linhaDeletar != numLinha && linhaDeletar != numLinha + 1 && linhaDeletar != numLinha + 2 && linhaDeletar != numLinha + 3 && linhaDeletar != numLinha + 4 && linhaDeletar != numLinha + 5 && linhaDeletar != numLinha + 6){
+                putc(letra, temporario);  
+            } 
+            if(letra == '\n'){
+                linhaDeletar++;
+            }
+            letra = getc(cars);
+        }
+
+        printf("Veiculo excluido, voltando ao menu principal...");
+
+        fclose(cars);
+        fclose(temporario);
+        remove("carros.txt");
+        rename("temporario.tmp", "carros.txt");
+    }
+    
+    
+}
+
 void main(){
     typedef struct Veiculo *pontVeiculo;
     //carro é um ponteiro da struct Veiculo
@@ -284,6 +344,7 @@ void main(){
                 mostrar();
                 break;
             case 4:
+                excluir();
                 break;
             default:
                 break;
@@ -295,8 +356,6 @@ void main(){
         printf("5) Sair\n");
         scanf("%d", &opt);
     }
-    
-    
     
 }
 
