@@ -28,7 +28,7 @@ struct VeiculoAlterado{
     char numPortas[TAM];
     char arCondicionado[TAM];
 };
-    
+//Função para cadastrar um novo veículo    
 void cadastrar(struct Veiculo *carro){
     FILE *cars;
     cars = fopen("carros.txt","r");
@@ -40,12 +40,12 @@ void cadastrar(struct Veiculo *carro){
     cars = fopen("carros.txt","a");
     
 
-    printf("Qual a placa do seu carro ?\n");
-    scanf("%s", &carro->placa);
+    printf("Qual a placa do seu carro [5 caracteres]?\n");
+    scanf("%s", carro->placa);
     printf("Qual a marca do seu carro ?\n");
-    scanf("%s", &carro->marca);
+    scanf("%s", carro->marca);
     printf("Qual o modelo do seu carro ?\n");
-    scanf("%s", &carro->modelo);
+    scanf("%s", carro->modelo);
     printf("Qual o ano de fabricacao do seu carro ?\n");
     scanf("%d", &carro->anoFab);
     printf("Qual a quilometragem do seu carro ?\n");
@@ -65,7 +65,7 @@ void cadastrar(struct Veiculo *carro){
 
     fclose(cars);
 }
-
+//Função para alterar o cadastro de algum veículo
 void alterar(struct VeiculoAlterado *carro2){
     FILE *cars;
     cars = fopen("carros.txt","r");
@@ -77,15 +77,16 @@ void alterar(struct VeiculoAlterado *carro2){
     char placa[6];
 
     printf("Qual a placa do veiculo a ser alterado ? ");
-    scanf("%s", &placa);
+    scanf("%s", placa);
 
     char frase[20] = "Placa: ";
     strcat(frase, placa);
     
     int c, registrado = 0, numLinha = 1;
     char buf[TAM];
-
-    while(fgets(&carro2->placa, TAM, cars) != NULL){
+    //Comparar a placa do carro com a dada pelo usuário e salvar as linhas abaixo
+    //dentro do ponteiro, além de descobrir a linha da placa
+    while(fgets(carro2->placa, TAM, cars) != NULL){
         carro2->placa[strcspn(carro2->placa,"\n")] = 0;
         if(strcmp(carro2->placa, frase) == 0){
             registrado = 1;
@@ -167,27 +168,27 @@ void alterar(struct VeiculoAlterado *carro2){
             switch(escolha){
                 case 1:
                     printf("Insira a nova marca:\n");
-                    scanf("%s", &carro2->marca);
+                    scanf("%s", carro2->marca);
                     break;
                 case 2:
                     printf("Insira o novo modelo:\n");
-                    scanf("%s", &carro2->modelo);
+                    scanf("%s", carro2->modelo);
                     break;
                 case 3:
                     printf("Insira o novo ano de fabricacao:\n");
-                    scanf("%s", &carro2->anoFab);
+                    scanf("%s", carro2->anoFab);
                     break;
                 case 4:
                     printf("Insira a nova quilometragem:\n");
-                    scanf("%s", &carro2->quilometragem);
+                    scanf("%s", carro2->quilometragem);
                     break;
                 case 5:
                     printf("Insira a nova quantidade de portas:\n");
-                    scanf("%s", &carro2->numPortas);
+                    scanf("%s", carro2->numPortas);
                     break;
                 case 6:
                     printf("Insira o estado do ar-condicionado (S/N):\n");
-                    scanf("%s", &carro2->arCondicionado);
+                    scanf("%s", carro2->arCondicionado);
                     break;
                 default:
                     break;
@@ -217,7 +218,7 @@ void alterar(struct VeiculoAlterado *carro2){
         rename("temporario.tmp", "carros.txt");
     }
 }
-
+//Função para mostrar o cadastro de algum veículo
 void mostrar(){
     FILE *cars;
     cars = fopen("carros.txt","r");
@@ -229,7 +230,7 @@ void mostrar(){
     char linha[TAM], placa[6];
 
     printf("Qual a placa do seu veiculo ? ");
-    scanf("%s", &placa);
+    scanf("%s", placa);
 
     char frase[20] = "Placa: ";
     strcat(frase, placa);
@@ -237,7 +238,7 @@ void mostrar(){
     int c, registrado = 0;
     
 
-    while(fgets(&linha, TAM, cars) != NULL){
+    while(fgets(linha, TAM, cars) != NULL){
         linha[strcspn(linha,"\n")] = 0;
         if(strcmp(linha, frase) == 0){
             registrado = 1;
@@ -255,7 +256,7 @@ void mostrar(){
     }
     fclose(cars);
 }
-
+//Função para excluir o cadastro de algum veículo
 void excluir(){
     FILE *cars;
     cars = fopen("carros.txt","r");
@@ -267,7 +268,7 @@ void excluir(){
     char linha[TAM], placa[6];
 
     printf("Qual a placa do veiculo a ser excluido ? ");
-    scanf("%s", &placa);
+    scanf("%s", placa);
 
     char frase[20] = "Placa: ";
     strcat(frase, placa);
@@ -275,7 +276,7 @@ void excluir(){
     int numLinha = 1, registrado = 0;
     
 
-    while(fgets(&linha, TAM, cars) != NULL){
+    while(fgets(linha, TAM, cars) != NULL){
         linha[strcspn(linha,"\n")] = 0;
         if(strcmp(linha, frase) == 0){
             registrado = 1;
@@ -304,7 +305,7 @@ void excluir(){
             letra = getc(cars);
         }
 
-        printf("Veiculo excluido, voltando ao menu principal...");
+        printf("\nVeiculo excluido, voltando ao menu principal...");
 
         fclose(cars);
         fclose(temporario);
@@ -314,8 +315,8 @@ void excluir(){
     
     
 }
-
-void main(){
+//Função principal 
+int main(){
     typedef struct Veiculo *pontVeiculo;
     //carro é um ponteiro da struct Veiculo
     pontVeiculo carro;
@@ -356,7 +357,7 @@ void main(){
         printf("5) Sair\n");
         scanf("%d", &opt);
     }
-    
+    return 0;
 }
 
 
