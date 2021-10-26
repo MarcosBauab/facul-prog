@@ -31,14 +31,7 @@ struct VeiculoAlterado{
 //Função para cadastrar um novo veículo    
 void cadastrar(struct Veiculo *carro){
     FILE *cars;
-    cars = fopen("carros.txt","r");
-    if(cars == NULL){
-        printf("ERRO NA ABERTURA DO ARQUIVO\n");
-        return;
-    }
-    fclose(cars);
-    cars = fopen("carros.txt","a");
-    
+    cars = fopen("carros.txt","a");    
 
     printf("Qual a placa do seu carro [5 caracteres]?\n");
     scanf("%s", carro->placa);
@@ -143,16 +136,20 @@ void alterar(struct VeiculoAlterado *carro2){
             numLinha++;
         }
     }
-
+    //Checa se o carro está registrado ou não
     if(registrado == 0){
         printf("Veiculo nao encontrado, voltando ao menu inicial...\n");
     } else {
+        //Volto ao início do arquivo e abro outro para salvar os
+        //dados temporariamente
         rewind(cars);
         FILE *temporario = fopen("temporario.tmp","w");
         int escolha;
 
         char letra;
         int linhaDeletar = 1;
+        //Leio letra por letra e excluo os caracteres das linhas a serem excluídas
+        //A "exclusão" é feita apenas não escrevendo tais caracteres, com o primeiro if
         letra = getc(cars);
         while(letra != EOF){
             if(linhaDeletar != numLinha && linhaDeletar != numLinha + 1 && linhaDeletar != numLinha + 2 && linhaDeletar != numLinha + 3 && linhaDeletar != numLinha + 4 && linhaDeletar != numLinha + 5 && linhaDeletar != numLinha + 6){
@@ -237,7 +234,8 @@ void mostrar(){
     
     int c, registrado = 0;
     
-
+    //Compara a placa recebida com a salva
+    //E printa as 6 linhas abaixo
     while(fgets(linha, TAM, cars) != NULL){
         linha[strcspn(linha,"\n")] = 0;
         if(strcmp(linha, frase) == 0){
@@ -275,7 +273,7 @@ void excluir(){
     
     int numLinha = 1, registrado = 0;
     
-
+    //Salva a linha do veículo a ser excluído em numLinha
     while(fgets(linha, TAM, cars) != NULL){
         linha[strcspn(linha,"\n")] = 0;
         if(strcmp(linha, frase) == 0){
