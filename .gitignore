@@ -53,3 +53,7 @@ dkms.conf
 *.idea
 teste.py
 teste.c
+.vscode
+*.zip
+main_4.c
+*.txt

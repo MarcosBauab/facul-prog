@@ -1,0 +1,14 @@
+Placa: AED23
+Marca: FIAT
+Modelo: UNO
+Ano de fabricacao: 2017
+Quilometragem: 25000
+Numero de portas: 4
+Ar-condicionado: S
+Placa: AJE32
+Marca: HONDA
+Modelo: FIT
+Ano de fabricacao: 2018
+Quilometragem: 8392183
+Numero de portas: 1
+Ar-condicionado: N
