@@ -65,23 +65,23 @@ PArvore liberar(PArvore arv){
 }
 //variável global usada por conta da recursividade da função
 int passo = 0;
-//função usada para inserir os nós na árvore de maneira posfixa
-PArvore criar_arv_posfix(char S1[], char S2[], int pi, int pf, int N){
+//função usada para inserir os nós na árvore
+PArvore criarArvore(char S1[], char S2[], int pi, int pf, int N){
     //através do ponto inicial (pi) e do ponto final (pf)
     //calcular quem está na esquerda ou direita do ponto buscado
     int  posicao, i;
 
     char aux;
-
+    //se o ponto inicial for maior, retorna NULO
     if ((pi > pf) || (passo == N)){
         return NULL; 
     }
 
-    PArvore arv_posfix = criar(S1[passo], NULL, NULL);
-
+    PArvore arvore = criar(S1[passo], NULL, NULL);
+    //retorna a arvore pra voltar na função inicial
     if(pi == pf){
         passo++;
-        return arv_posfix;
+        return arvore;
     }
 
     aux = S1[passo++];
@@ -92,10 +92,10 @@ PArvore criar_arv_posfix(char S1[], char S2[], int pi, int pf, int N){
         }
     }
 
-    arv_posfix->esquerda = criar_arv_posfix(S1, S2, pi, posicao - 1, N);
-    arv_posfix->direita = criar_arv_posfix(S1, S2, posicao + 1, pf, N);
+    arvore->esquerda = criarArvore(S1, S2, pi, posicao - 1, N);
+    arvore->direita = criarArvore(S1, S2, posicao + 1, pf, N);
 
-    return arv_posfix;
+    return arvore;
 
 }
 //função usada para limpar o buffer do teclado
@@ -160,7 +160,7 @@ int main(){
 
         }
         //criando a árvore binária e colocando passo como zero
-        tree = criar_arv_posfix(prefix, infix, 0, noss, noss);
+        tree = criarArvore(prefix, infix, 0, noss, noss);
         passo = 0; 
         //validando se a infixa está correta
         validaP(tree, prefixC);
